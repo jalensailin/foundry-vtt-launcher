@@ -3,12 +3,19 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # Default values
-webpage=true
+VERSION=13
+WEBPAGE=true
+
+# Parse positional arguments first (number of args gt 0 and not starting with -)
+if [[ $# -gt 0 && ! "$1" =~ ^- ]]; then
+  VERSION=$1
+  shift  # Remove the first argument (VERSION) from the list
+fi
 
 # Parse options first
 while getopts "n" opt; do
   case "$opt" in
-    n) webpage=false ;;
+    n) WEBPAGE=false ;;
     *) echo "Invalid option"; exit 1 ;;
   esac
 done
@@ -17,9 +24,7 @@ done
 shift $((OPTIND - 1))
 
 # Define variables
-VERSION=${1:-13} # Process positional argument.
 PORT=$((30000 + VERSION))
-
 DATA_PATH="$HOME/Documents/coding/foundry-vtt"
 APP_DATA_PATH="$DATA_PATH/instances/v${VERSION}"
 USER_DATA_PATH="$DATA_PATH/user-data/v${VERSION}"
@@ -42,7 +47,7 @@ FOUNDRY_PID=$!
 trap "kill $FOUNDRY_PID" EXIT
 
 
-if [ "$webpage" = true ]; then
+if [ "$WEBPAGE" = true ]; then
     # Wait for 2 seconds
     sleep 2
     
