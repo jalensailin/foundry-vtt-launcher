@@ -24,10 +24,10 @@ done
 shift $((OPTIND - 1))
 
 # Define variables
-PORT=$((30000 + VERSION))
+PORT=30000
 DATA_PATH="$HOME/Documents/coding/foundry-vtt"
 APP_DATA_PATH="$DATA_PATH/instances/v${VERSION}"
-USER_DATA_PATH="$DATA_PATH/user-data/v${VERSION}"
+USER_DATA_PATH="$DATA_PATH/main-user-data/v${VERSION}"
 
 # Compatibility
 if [ "$VERSION" -lt 13 ]; then
